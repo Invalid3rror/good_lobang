@@ -16,6 +16,12 @@ jobs:
         with:
           flutter-version: '3.24.0'  # Latest stable with Dart 3.3.1+
 
+      - name: Create .env file
+        run: |
+          echo "STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}" > .env
+          echo "API-KEY=${{ secrets.API_KEY }}" >> .env
+          # Add other env vars as needed
+
       - name: Install dependencies
         run: flutter pub get
 
