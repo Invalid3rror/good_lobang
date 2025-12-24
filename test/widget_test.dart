@@ -16,7 +16,14 @@ import 'package:goodlobang/main.dart';
 
 void main() {
   setUpAll(() async {
-    await Firebase.initializeApp();
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'test-api-key',
+        appId: '1:test:test',
+        messagingSenderId: '123456789',
+        projectId: 'test-project',
+      ),
+    );
     GetIt.instance.registerLazySingleton(() => FirebaseService());
     GetIt.instance.registerLazySingleton(() => ThemeService());
   });
