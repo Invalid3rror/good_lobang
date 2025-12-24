@@ -16,8 +16,24 @@ GoodLobang helps users find and sell near-expiry deals with voice search, Stripe
 
 1) Install Flutter and run `flutter pub get`.
 2) Add Firebase configs: google-services.json (Android), GoogleService-Info.plist (iOS/macOS), firebase_options.dart (all).
-3) Set Stripe publishable key in your `.env` and wire it in `main.dart`.
+3) Set up environment variables (see below).
 4) Run `flutter run` on your target (emulator/device/web/desktop).
+
+## Environment setup
+
+Create a `.env` file in the project root (it's already in `.gitignore` for security).
+
+Add these variables:
+
+- `STRIPE_PUBLISHABLE_KEY`: Your Stripe publishable key.
+  - Get it: Sign up at [stripe.com](https://stripe.com), go to Dashboard > Developers > API keys. Use the "Publishable key" (starts with `pk_test_` for testing).
+
+Example `.env`:
+```
+STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
+```
+
+Keep this file local—never commit it to git.
 
 ## Configure auth
 
@@ -41,6 +57,10 @@ GoodLobang helps users find and sell near-expiry deals with voice search, Stripe
 ## Navigation
 
 - Bottom navigation drives Home, Sell, Notifications, and Profile. Search (text or voice) sits in the Home AppBar.
+
+## Notifications
+
+- In-app and push notifications surface order status and app events (ensure FCM is configured per platform).
 
 ## Notifications
 
