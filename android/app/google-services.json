@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "584689044222",
+    "project_id": "goodlobang-6923a",
+    "storage_bucket": "goodlobang-6923a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584689044222:android:59f0d83bf213c6b24673af",
+        "android_client_info": {
+          "package_name": "com.example.transport_expenses_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "584689044222-filpv04f3pnab82g976n5nv43lp0ongk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.transport_expenses_tracker",
+            "certificate_hash": "85f7d90342c9a9e6173bf1dbea4988edf0a18545"
+          }
+        },
+        {
+          "client_id": "584689044222-aeen3vqkd8uhnrbo548bg29qs3atj9ff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-KBo07vL87grIkpnL-8MDw3tdjrJT-eg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "584689044222-aeen3vqkd8uhnrbo548bg29qs3atj9ff.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
