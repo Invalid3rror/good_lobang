@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:get_it/get_it.dart';
 import 'package:goodlobang/screens/auth_ui/register/register.dart';
 import 'package:goodlobang/screens/auth_ui/reset_password.dart';
@@ -58,22 +59,13 @@ class _LoginScreenState extends State<LoginScreen> {
   // Function to handle Google sign-in
   Future<void> signInWithGoogle() async {
     try {
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-        final OAuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        final UserCredential userCredential = await auth.signInWithCredential(credential);
-      
-        // Check if user is new or existing
+      if (kIsWeb) {
+        final provider = GoogleAuthProvider();
+        provider.setCustomParameters({'prompt': 'select_account'});
+        final UserCredential userCredential = await auth.signInWithPopup(provider);
         final User? user = userCredential.user;
         if (user != null) {
-          // Save or update user data in Firestore
           await fbService.saveGoogleSignInUserData(user);
-
-          // Navigate to home screen
           Navigator.of(context).pushReplacement(
             MaterialPageRoute(
               builder: (context) => const BaseScreen(
@@ -84,8 +76,32 @@ class _LoginScreenState extends State<LoginScreen> {
           );
         }
       } else {
-        // Handle Google sign-in cancellation
-        print('Google sign-in was canceled.');
+        // Force account chooser on mobile by signing out first
+        await googleSignIn.signOut();
+        final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+        if (googleUser != null) {
+          final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+          final OAuthCredential credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          final UserCredential userCredential = await auth.signInWithCredential(credential);
+          final User? user = userCredential.user;
+          if (user != null) {
+            await fbService.saveGoogleSignInUserData(user);
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => const BaseScreen(
+                  content: HomeScreen(searchQuery: ''),
+                  selectedIndex: 0,
+                ),
+              ),
+            );
+          }
+        } else {
+          // Handle Google sign-in cancellation
+          print('Google sign-in was canceled.');
+        }
       }
     } catch (error) {
       print('Error signing in with Google: $error');
